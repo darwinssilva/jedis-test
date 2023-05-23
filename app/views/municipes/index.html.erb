@@ -1,0 +1,26 @@
+<h1>Listagem de Munícipes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>CPF</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @municipes.each do |municipe| %>
+      <tr>
+        <td><%= municipe.nome_completo %></td>
+        <td><%= municipe.cpf %></td>
+        <td><%= municipe.status ? 'Ativo' : 'Inativo' %></td>
+        <td>
+          <%= link_to 'Detalhes', municipe_path(municipe) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Novo Municipe', new_municipe_path %>

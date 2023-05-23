@@ -1,0 +1,14 @@
+<h1>Detalhes do Munícipe</h1>
+
+  <p><strong>Nome:</strong> <%= @municipe.nome_completo %></p>
+  <p><strong>CPF:</strong> <%= @municipe.cpf %></p>
+  <!-- Outros campos do Municipe -->
+  
+  <h2>Endereço</h2>
+  
+  <p><strong>CEP:</strong> <%= @municipe.endereco.cep %></p>
+  <p><strong>Logradouro:</strong> <%= @municipe.endereco.logradouro %></p>
+  <!-- Outros campos do Endereco -->
+  
+  <%= link_to 'Editar', edit_municipe_path(@municipe) %>
+  

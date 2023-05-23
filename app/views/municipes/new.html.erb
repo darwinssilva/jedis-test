@@ -1,0 +1,52 @@
+<h1>Cadastrar Munícipe</h1>
+
+<%= form_with(model: @municipe, local: true) do |form| %>
+  <%= form.label :nome_completo %>
+  <%= form.text_field :nome_completo %>
+
+  <%= form.label :cpf %>
+  <%= form.text_field :cpf %>
+
+  <%= form.label :cns %>
+  <%= form.text_field :cns %>
+
+  <%= form.label :email %>
+  <%= form.email_field :email %>
+
+  <%= form.label :data_nascimento %>
+  <%= form.date_field :data_nascimento %>
+
+  <%= form.label :telefone %>
+  <%= form.text_field :telefone %>
+
+  <%= form.label :foto %>
+  <%= form.file_field :foto %>
+
+  <%= form.label :status %>
+  <%= form.check_box :status %>
+
+  <%= form.fields_for :endereco do |endereco_fields| %>
+    <%= endereco_fields.label :cep %>
+    <%= endereco_fields.text_field :cep %>
+
+    <%= endereco_fields.label :logradouro %>
+    <%= endereco_fields.text_field :logradouro %>
+
+    <%= endereco_fields.label :complemento %>
+    <%= endereco_fields.text_field :complemento %>
+
+    <%= endereco_fields.label :bairro %>
+    <%= endereco_fields.text_field :bairro %>
+
+    <%= endereco_fields.label :cidade %>
+    <%= endereco_fields.text_field :cidade %>
+
+    <%= endereco_fields.label :uf %>
+    <%= endereco_fields.text_field :uf %>
+
+    <%= endereco_fields.label :codigo_ibge %>
+    <%= endereco_fields.text_field :codigo_ibge %>
+  <% end %>
+
+  <%= form.submit 'Salvar' %>
+<% end %>
