@@ -1,6 +1,6 @@
 <h1>Cadastrar Munícipe</h1>
 
-<%= form_with(model: @municipe, local: true) do |form| %>
+<%= form_with(model: @municipe, local: true, html: { multipart: true }) do |form| %>
   <%= form.label :nome_completo %>
   <%= form.text_field :nome_completo %>
 

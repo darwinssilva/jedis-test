@@ -1,11 +1,13 @@
-# app/models/municipe.rb
 class Municipe < ApplicationRecord
   has_one :endereco
-
-  validates :nome_completo, :cpf, :cns, :email, :data_nascimento, :telefone, :foto, presence: true
+  
+  validates :nome_completo, :cpf, :cns, :email, :data_nascimento, :telefone, :foto, :status, presence: true
   validates :cpf, :cns, :email, uniqueness: true
-  validates :cpf, format: { with: /\A\d{11}\z/, message: 'deve conter apenas números e ter 11 dígitos' }
-  # Outras validações
+  validate :validar_cpf
+  validate :validar_cns
+  validate :validar_email
+  validate :validar_data_nascimento
+  validate :validar_foto_anexada
 
   after_create :send_email_and_sms
   after_update :send_email_and_sms, if: :status_changed?
@@ -13,14 +15,39 @@ class Municipe < ApplicationRecord
   private
 
   def send_email_and_sms
-    # Lógica para enviar o email e o SMS
+    MunicipeMailer.cadastro_email(@municipe).deliver_now
+    SMSService.new.enviar_sms(@municipe.telefone, 'Cadastro realizado com sucesso!')
   end
-end
 
-# app/models/endereco.rb
-class Endereco < ApplicationRecord
-  belongs_to :municipe
+  def validar_cpf
+    return if cpf.blank?
 
-  validates :cep, :logradouro, :bairro, :cidade, :uf, presence: true
-  # Outras validações
+    cpf_valido = CPF.valid?(cpf)
+    errors.add(:cpf, 'não é válido') unless cpf_valido
+  end
+
+  def validar_cns
+    return if cns.blank?
+
+    unless cns.match?(/\A\d{15}\z/)
+      errors.add(:cns, 'formato inválido')
+    end
+  end
+  def validar_email
+    errors.add(:email, "inválido") unless email.match?(URI::MailTo::EMAIL_REGEXP)
+  end
+
+  def validar_data_nascimento
+    if data_nascimento.present? && data_nascimento.future?
+      errors.add(:data_nascimento, "não pode ser uma data futura")
+    elsif data_nascimento.present? && data_nascimento.year < 1900
+      errors.add(:data_nascimento, "inválida")
+    end
+  end
+
+  def validar_foto_anexada
+    return if foto.attached?
+
+    errors.add(:foto, 'deve ser anexada')
+  end
 end

@@ -36,10 +36,16 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address: "smtp.example.com",
+    port: 587,
+    domain: "example.com",
+    user_name: "your_username",
+    password: "your_password",
+    authentication: :login,
+    enable_starttls_auto: true
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -67,4 +73,7 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.twilio_account_sid = 'AC89b520e2a2f004721f7ff5ddf7593a66'
+  config.twilio_auth_token = 'e969940319fa258f92f8a4280a72f10e'
 end

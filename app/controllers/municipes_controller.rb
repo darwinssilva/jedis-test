@@ -1,6 +1,8 @@
 class MunicipesController < ApplicationController
   def index
     @municipes = Municipe.all
+    @municipes = @municipes.where(nome: params[:nome]) if params[:nome].present?
+    @municipes = @municipes.joins(:endereco).where(enderecos: { cidade: params[:cidade] }) if params[:cidade].present?
   end
 
   def new
@@ -11,7 +13,6 @@ class MunicipesController < ApplicationController
   def create
     @municipe = Municipe.new(municipe_params)
     if @municipe.save
-      # Envie o email e SMS ao municipe aqui
       redirect_to municipes_path, notice: 'Municipe cadastrado com sucesso.'
     else
       render :new
@@ -26,7 +27,6 @@ class MunicipesController < ApplicationController
   def update
     @municipe = Municipe.find(params[:id])
     if @municipe.update(municipe_params)
-      # Envie o email e SMS ao municipe aqui
       redirect_to municipes_path, notice: 'Municipe atualizado com sucesso.'
     else
       render :edit

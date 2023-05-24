@@ -1,26 +1,40 @@
 <h1>Listagem de Munícipes</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>CPF</th>
-      <th>Status</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @municipes.each do |municipe| %>
-      <tr>
-        <td><%= municipe.nome_completo %></td>
-        <td><%= municipe.cpf %></td>
-        <td><%= municipe.status ? 'Ativo' : 'Inativo' %></td>
-        <td>
-          <%= link_to 'Detalhes', municipe_path(municipe) %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <%= link_to 'Novo Municipe', new_municipe_path %>
+
+<%= form_tag municipes_path, method: :get do %>
+  <%= label_tag :nome, 'Nome:' %>
+  <%= text_field_tag :nome, params[:nome] %>
+
+  <%= label_tag :cidade, 'Cidade:' %>
+  <%= text_field_tag :cidade, params[:cidade] %>
+
+  <%= submit_tag 'Buscar' %>
+<% end %>
+
+<% if @municipes.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Email</th>
+        <th>Endereço</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @municipes.each do |municipe| %>
+        <tr>
+          <td><%= municipe.nome %></td>
+          <td><%= municipe.cpf %></td>
+          <td><%= municipe.email %></td>
+          <td><%= municipe.endereco.full_address %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate @municipes %>
+<% else %>
+  <p>Nenhum município encontrado.</p>
+<% end %>

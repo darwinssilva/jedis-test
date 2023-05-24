@@ -30,6 +30,14 @@ gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
 
+gem 'twilio-ruby'
+
+gem 'will_paginate'
+
+gem 'cpf_cnpj'
+
+gem 'cns_validator'
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
