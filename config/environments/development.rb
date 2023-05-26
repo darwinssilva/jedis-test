@@ -75,5 +75,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.twilio_account_sid = 'AC89b520e2a2f004721f7ff5ddf7593a66'
-  config.twilio_auth_token = 'e969940319fa258f92f8a4280a72f10e'
+  config.twilio_auth_token = '476b47bc37ccf71dc8cdfddc434b8bbf'
 end

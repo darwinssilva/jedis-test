@@ -11,7 +11,7 @@ class SmsService
   def enviar_sms(numero, mensagem)
     @client.messages.create(
       from: '+13159096538',
-      to: numero,
+      to: "+#{numero}",
       body: mensagem
     )
   end

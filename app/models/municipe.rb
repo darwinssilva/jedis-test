@@ -7,16 +7,14 @@ class Municipe < ApplicationRecord
   validate :validar_cns
   validate :validar_email
   validate :validar_data_nascimento
-  validate :validar_foto_anexada
 
-  after_create :send_email_and_sms
   after_update :send_email_and_sms, if: :status_changed?
 
   private
 
   def send_email_and_sms
-    MunicipeMailer.cadastro_email(@municipe).deliver_now
-    SMSService.new.enviar_sms(@municipe.telefone, 'Cadastro realizado com sucesso!')
+    MunicipeMailer.cadastro_email(self).deliver_now
+    SmsService.new.enviar_sms(self.telefone, 'Cadastro realizado com sucesso!')
   end
 
   def validar_cpf
@@ -43,11 +41,5 @@ class Municipe < ApplicationRecord
     elsif data_nascimento.present? && data_nascimento.year < 1900
       errors.add(:data_nascimento, "inválida")
     end
-  end
-
-  def validar_foto_anexada
-    return if foto.attached?
-
-    errors.add(:foto, 'deve ser anexada')
   end
 end
