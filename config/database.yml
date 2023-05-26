@@ -83,5 +83,5 @@ test:
 production:
   <<: *default
   database: jedis_test_production
-  username: jedis_test
-  password: <%= ENV["JEDIS_TEST_DATABASE_PASSWORD"] %>
+  username: postgres
+  password: postgres

@@ -36,8 +36,6 @@ gem 'will_paginate'
 
 gem 'cpf_cnpj'
 
-gem 'cns_validator'
-
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 

@@ -1,6 +1,6 @@
 require 'twilio-ruby'
 
-class SMSService
+class SmsService
   def initialize
     @client = Twilio::REST::Client.new(
       Rails.configuration.twilio_account_sid,
