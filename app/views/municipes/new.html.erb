@@ -1,52 +1,148 @@
-<h1>Cadastrar Munícipe</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cadastrar Munícipe</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .page-title {
+      margin-bottom: 20px;
+    }
 
-<%= form_with(model: @municipe, local: true, html: { multipart: true }) do |form| %>
-  <%= form.label :nome_completo %>
-  <%= form.text_field :nome_completo %>
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-  <%= form.label :cpf %>
-  <%= form.text_field :cpf %>
+    .form-label {
+      font-weight: bold;
+    }
 
-  <%= form.label :cns %>
-  <%= form.text_field :cns %>
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
 
-  <%= form.label :email %>
-  <%= form.email_field :email %>
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-  <%= form.label :data_nascimento %>
-  <%= form.date_field :data_nascimento %>
+    .alert {
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 4px;
+    }
 
-  <%= form.label :telefone %>
-  <%= form.text_field :telefone %>
+    .alert-danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="page-title">Cadastrar Munícipe</h1>
 
-  <%= form.label :foto %>
-  <%= form.file_field :foto %>
+    <%= form_with(model: @municipe, local: true, html: { multipart: true }) do |form| %>
+      <% if @municipe.errors.any? %>
+        <div class="alert alert-danger">
+          <ul>
+            <% @municipe.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <%= form.label :status %>
-  <%= form.check_box :status %>
+      <div class="form-group">
+        <%= form.label :nome_completo, class: "form-label" %>
+        <%= form.text_field :nome_completo, class: "form-control" %>
+      </div>
 
-  <%= form.fields_for :endereco do |endereco_fields| %>
-    <%= endereco_fields.label :cep %>
-    <%= endereco_fields.text_field :cep %>
+      <div class="form-group">
+        <%= form.label :cpf, class: "form-label" %>
+        <%= form.text_field :cpf, class: "form-control" %>
+      </div>
 
-    <%= endereco_fields.label :logradouro %>
-    <%= endereco_fields.text_field :logradouro %>
+      <div class="form-group">
+        <%= form.label :cns, class: "form-label" %>
+        <%= form.text_field :cns, class: "form-control" %>
+      </div>
 
-    <%= endereco_fields.label :complemento %>
-    <%= endereco_fields.text_field :complemento %>
+      <div class="form-group">
+        <%= form.label :email, class: "form-label" %>
+        <%= form.email_field :email, class: "form-control" %>
+      </div>
 
-    <%= endereco_fields.label :bairro %>
-    <%= endereco_fields.text_field :bairro %>
+      <div class="form-group">
+        <%= form.label :data_nascimento, class: "form-label" %>
+        <%= form.date_field :data_nascimento, class: "form-control" %>
+      </div>
 
-    <%= endereco_fields.label :cidade %>
-    <%= endereco_fields.text_field :cidade %>
+      <div class="form-group">
+        <%= form.label :telefone, class: "form-label" %>
+        <%= form.text_field :telefone, class: "form-control" %>
+      </div>
 
-    <%= endereco_fields.label :uf %>
-    <%= endereco_fields.text_field :uf %>
+      <div class="form-group">
+        <%= form.label :foto, class: "form-label" %>
+        <%= form.file_field :foto, class: "form-control" %>
+      </div>
 
-    <%= endereco_fields.label :codigo_ibge %>
-    <%= endereco_fields.text_field :codigo_ibge %>
-  <% end %>
+      <div class="form-group">
+        <%= form.label :status, class: "form-label" %>
+        <%= form.check_box :status %>
+      </div>
 
-  <%= form.submit 'Salvar' %>
-<% end %>
+      <%= form.fields_for :endereco do |endereco_fields| %>
+        <div class="form-group">
+          <%= endereco_fields.label :cep, class: "form-label" %>
+          <%= endereco_fields.text_field :cep, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= endereco_fields.label :logradouro, class: "form-label" %>
+          <%= endereco_fields.text_field :logradouro, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= endereco_fields.label :complemento, class: "form-label" %>
+          <%= endereco_fields.text_field :complemento, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= endereco_fields.label :bairro, class: "form-label" %>
+          <%= endereco_fields.text_field :bairro, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= endereco_fields.label :cidade, class: "form-label" %>
+          <%= endereco_fields.text_field :cidade, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= endereco_fields.label :uf, class: "form-label" %>
+          <%= endereco_fields.text_field :uf, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <%= endereco_fields.label :codigo_ibge, class: "form-label" %>
+          <%= endereco_fields.text_field :codigo_ibge, class: "form-control" %>
+        </div>
+      <% end %>
+
+      <%= form.submit 'Salvar', class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

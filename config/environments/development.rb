@@ -36,16 +36,7 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: "smtp.example.com",
-    port: 587,
-    domain: "example.com",
-    user_name: "your_username",
-    password: "your_password",
-    authentication: :login,
-    enable_starttls_auto: true
-  }
+  config.action_mailer.delivery_method = :test
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -75,5 +66,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.twilio_account_sid = 'AC89b520e2a2f004721f7ff5ddf7593a66'
-  config.twilio_auth_token = '476b47bc37ccf71dc8cdfddc434b8bbf'
+  config.twilio_auth_token = '6c42f51025287c7429785f5c1febe6fb'
 end

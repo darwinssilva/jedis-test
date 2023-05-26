@@ -12,10 +12,12 @@ class MunicipesController < ApplicationController
 
   def create
     @municipe = Municipe.new(municipe_params)
+    @municipe.build_endereco
     if @municipe.save
       redirect_to municipes_path, notice: 'Municipe cadastrado com sucesso.'
     else
-      render :new
+      flash.now[:alert] = 'Por favor, corrija os erros abaixo.'
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -40,7 +42,6 @@ class MunicipesController < ApplicationController
   private
 
   def municipe_params
-    params.require(:municipe).permit(:nome_completo, :cpf, :cns, :email, :data_nascimento, :telefone, :foto, :status,
-                                     endereco_attributes: [:cep, :logradouro, :complemento, :bairro, :cidade, :uf, :codigo_ibge])
+    params.require(:municipe).permit(:nome_completo, :cpf, :cns, :email, :data_nascimento, :telefone, :foto, :status, endereco_attributes: [:cep, :logradouro, :complemento, :bairro, :cidade, :uf, :codigo_ibge])
   end
 end

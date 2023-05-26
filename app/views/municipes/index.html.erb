@@ -1,40 +1,102 @@
-<h1>Listagem de Munícipes</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Listagem de Munícipes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .page-title {
+      margin-bottom: 20px;
+    }
 
-<%= link_to 'Novo Municipe', new_municipe_path %>
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-<%= form_tag municipes_path, method: :get do %>
-  <%= label_tag :nome_completo, 'Nome:' %>
-  <%= text_field_tag :nome_completo, params[:nome_completo] %>
+    .form-label {
+      font-weight: bold;
+    }
 
-  <%= label_tag :cidade, 'Cidade:' %>
-  <%= text_field_tag :cidade, params[:cidade] %>
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
 
-  <%= submit_tag 'Buscar' %>
-<% end %>
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-<% if @municipes.any? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>CPF</th>
-        <th>Email</th>
-        <th>Endereço</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @municipes.each do |municipe| %>
-        <tr>
-          <td><%= municipe.nome_completo %></td>
-          <td><%= municipe.cpf %></td>
-          <td><%= municipe.email %></td>
-          <td><%= municipe.endereco.full_address %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-  <%= paginate @municipes %>
-<% else %>
-  <p>Nenhum município encontrado.</p>
-<% end %>
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .pagination {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="page-title">Listagem de Munícipes</h1>
+
+    <%= link_to 'Novo Municipe', new_municipe_path, class: "btn btn-primary" %>
+
+    <%= form_tag municipes_path, method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= label_tag :nome_completo, 'Nome:', class: "form-label" %>
+        <%= text_field_tag :nome_completo, params[:nome_completo], class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= label_tag :cidade, 'Cidade:', class: "form-label" %>
+        <%= text_field_tag :cidade, params[:cidade], class: "form-control" %>
+      </div>
+
+      <%= submit_tag 'Buscar', class: "btn btn-primary" %>
+    <% end %>
+
+    <% if @municipes.any? %>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>CPF</th>
+            <th>Email</th>
+            <th>Endereço</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @municipes.each do |municipe| %>
+            <tr>
+              <td><%= municipe.nome_completo %></td>
+              <td><%= municipe.cpf %></td>
+              <td><%= municipe.email %></td>
+              <td><%= municipe.endereco.logradouro %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= paginate @municipes, class: "pagination" %>
+    <% else %>
+      <p>Nenhum município encontrado.</p>
+    <% end %>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

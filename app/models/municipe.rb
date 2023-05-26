@@ -1,5 +1,6 @@
 class Municipe < ApplicationRecord
   has_one :endereco
+  accepts_nested_attributes_for :endereco
   
   validates :nome_completo, :cpf, :cns, :email, :data_nascimento, :telefone, :foto, :status, presence: true
   validates :cpf, :cns, :email, uniqueness: true
@@ -8,6 +9,7 @@ class Municipe < ApplicationRecord
   validate :validar_email
   validate :validar_data_nascimento
 
+  after_create :send_email_and_sms
   after_update :send_email_and_sms, if: :status_changed?
 
   private
