@@ -34,6 +34,7 @@ class Municipe < ApplicationRecord
     end
   end
   def validar_email
+    return if email.blank?
     errors.add(:email, "inválido") unless email.match?(URI::MailTo::EMAIL_REGEXP)
   end
 

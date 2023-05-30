@@ -1,7 +1,13 @@
 require 'rails_helper'
+require 'webmock/rspec'
 
 RSpec.describe MunicipesController, type: :controller do
   describe "GET index" do
+    before do
+      stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/AC89b520e2a2f004721f7ff5ddf7593a66/Messages.json')
+        .to_return(status: 200, body: '', headers: {})
+    end
+
     it "assigns all municipes to @municipes" do
       municipe1 = FactoryBot.create(:municipe)
       municipe2 = FactoryBot.create(:municipe)
@@ -29,6 +35,11 @@ RSpec.describe MunicipesController, type: :controller do
   end
 
   describe "GET new" do
+    before do
+      stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/AC89b520e2a2f004721f7ff5ddf7593a66/Messages.json')
+        .to_return(status: 200, body: '', headers: {})
+    end
+
     it "assigns a new municipe to @municipe" do
       get :new
 
@@ -37,51 +48,65 @@ RSpec.describe MunicipesController, type: :controller do
   end
 
   context "with valid parameters" do
+    before do
+      stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/AC89b520e2a2f004721f7ff5ddf7593a66/Messages.json')
+        .to_return(status: 200, body: '', headers: {})
+    end
+
     it "creates a new municipe" do
       municipe_attributes = FactoryBot.attributes_for(:municipe)
       endereco_attributes = FactoryBot.attributes_for(:endereco)
       params = { municipe: municipe_attributes.merge(endereco_attributes) }
-  
+
       expect {
         post :create, params: params
       }.to change(Municipe, :count).by(1)
     end
-  
+
     it "redirects to the municipes index page" do
       municipe_attributes = FactoryBot.attributes_for(:municipe)
       endereco_attributes = FactoryBot.attributes_for(:endereco)
       params = { municipe: municipe_attributes.merge(endereco_attributes) }
-  
+
       post :create, params: params
-  
+
       expect(response).to redirect_to(municipes_path)
     end
   end
-  
+
   context "with invalid parameters" do
+    before do
+      stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/AC89b520e2a2f004721f7ff5ddf7593a66/Messages.json')
+        .to_return(status: 200, body: '', headers: {})
+    end
+
     it "does not create a new municipe" do
       municipe_attributes = FactoryBot.attributes_for(:municipe, nome_completo: nil)
       endereco_attributes = FactoryBot.attributes_for(:endereco)
       params = { municipe: municipe_attributes.merge(endereco_attributes) }
-  
+
       expect {
         post :create, params: params
       }.to_not change(Municipe, :count)
     end
-  
+
     it "renders the new template" do
       municipe_attributes = FactoryBot.attributes_for(:municipe, nome_completo: nil)
       endereco_attributes = FactoryBot.attributes_for(:endereco)
       params = { municipe: municipe_attributes.merge(endereco_attributes) }
-  
+
       post :create, params: params
-  
+
       expect(response).to render_template(:new)
     end
   end
-  
 
   describe "GET edit" do
+    before do
+      stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/AC89b520e2a2f004721f7ff5ddf7593a66/Messages.json')
+        .to_return(status: 200, body: '', headers: {})
+    end
+
     it "assigns the requested municipe to @municipe" do
       municipe = FactoryBot.create(:municipe)
 
@@ -92,6 +117,11 @@ RSpec.describe MunicipesController, type: :controller do
   end
 
   describe "PUT update" do
+    before do
+      stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/AC89b520e2a2f004721f7ff5ddf7593a66/Messages.json')
+        .to_return(status: 200, body: '', headers: {})
+    end
+
     let(:municipe) { FactoryBot.create(:municipe) }
 
     context "with valid parameters" do
@@ -128,6 +158,11 @@ RSpec.describe MunicipesController, type: :controller do
   end
 
   describe "GET show" do
+    before do
+      stub_request(:post, 'https://api.twilio.com/2010-04-01/Accounts/AC89b520e2a2f004721f7ff5ddf7593a66/Messages.json')
+        .to_return(status: 200, body: '', headers: {})
+    end
+
     it "assigns the requested municipe to @municipe" do
       municipe = FactoryBot.create(:municipe)
 
