@@ -3,6 +3,7 @@ class MunicipesController < ApplicationController
     @municipes = Municipe.all
     @municipes = @municipes.where(nome_completo: params[:nome_completo]) if params[:nome_completo].present?
     @municipes = @municipes.joins(:endereco).where(enderecos: { cidade: params[:cidade] }) if params[:cidade].present?
+    @municipes = @municipes.paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -12,7 +13,6 @@ class MunicipesController < ApplicationController
 
   def create
     @municipe = Municipe.new(municipe_params)
-    @municipe.build_endereco
     if @municipe.save
       redirect_to municipes_path, notice: 'Municipe cadastrado com sucesso.'
     else
@@ -42,6 +42,7 @@ class MunicipesController < ApplicationController
   private
 
   def municipe_params
-    params.require(:municipe).permit(:nome_completo, :cpf, :cns, :email, :data_nascimento, :telefone, :foto, :status, endereco_attributes: [:cep, :logradouro, :complemento, :bairro, :cidade, :uf, :codigo_ibge])
+    params.require(:municipe).permit(:nome_completo, :cpf, :cns, :email, :data_nascimento, :telefone, :foto, :status,
+      endereco_attributes: [:cep, :logradouro, :complemento, :bairro, :cidade, :uf, :codigo_ibge])
   end
 end

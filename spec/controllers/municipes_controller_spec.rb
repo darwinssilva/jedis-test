@@ -36,35 +36,50 @@ RSpec.describe MunicipesController, type: :controller do
     end
   end
 
-  describe "POST create" do
-    context "with valid parameters" do
-      it "creates a new municipe" do
-        expect {
-          post :create, params: { municipe: FactoryBot.attributes_for(:municipe) }
-        }.to change(Municipe, :count).by(1)
-      end
-
-      it "redirects to the municipes index page" do
-        post :create, params: { municipe: FactoryBot.attributes_for(:municipe) }
-
-        expect(response).to redirect_to(municipes_path)
-      end
+  context "with valid parameters" do
+    it "creates a new municipe" do
+      municipe_attributes = FactoryBot.attributes_for(:municipe)
+      endereco_attributes = FactoryBot.attributes_for(:endereco)
+      params = { municipe: municipe_attributes.merge(endereco_attributes) }
+  
+      expect {
+        post :create, params: params
+      }.to change(Municipe, :count).by(1)
     end
-
-    context "with invalid parameters" do
-      it "does not create a new municipe" do
-        expect {
-          post :create, params: { municipe: FactoryBot.attributes_for(:municipe, nome_completo: nil) }
-        }.to_not change(Municipe, :count)
-      end
-
-      it "renders the new template" do
-        post :create, params: { municipe: FactoryBot.attributes_for(:municipe, nome_completo: nil) }
-
-        expect(response).to render_template(:new)
-      end
+  
+    it "redirects to the municipes index page" do
+      municipe_attributes = FactoryBot.attributes_for(:municipe)
+      endereco_attributes = FactoryBot.attributes_for(:endereco)
+      params = { municipe: municipe_attributes.merge(endereco_attributes) }
+  
+      post :create, params: params
+  
+      expect(response).to redirect_to(municipes_path)
     end
   end
+  
+  context "with invalid parameters" do
+    it "does not create a new municipe" do
+      municipe_attributes = FactoryBot.attributes_for(:municipe, nome_completo: nil)
+      endereco_attributes = FactoryBot.attributes_for(:endereco)
+      params = { municipe: municipe_attributes.merge(endereco_attributes) }
+  
+      expect {
+        post :create, params: params
+      }.to_not change(Municipe, :count)
+    end
+  
+    it "renders the new template" do
+      municipe_attributes = FactoryBot.attributes_for(:municipe, nome_completo: nil)
+      endereco_attributes = FactoryBot.attributes_for(:endereco)
+      params = { municipe: municipe_attributes.merge(endereco_attributes) }
+  
+      post :create, params: params
+  
+      expect(response).to render_template(:new)
+    end
+  end
+  
 
   describe "GET edit" do
     it "assigns the requested municipe to @municipe" do

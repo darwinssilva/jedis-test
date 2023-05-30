@@ -89,7 +89,7 @@
         </tbody>
       </table>
 
-      <%= paginate @municipes, class: "pagination" %>
+      <%= will_paginate @municipes, class: "pagination" %>
     <% else %>
       <p>Nenhum município encontrado.</p>
     <% end %>

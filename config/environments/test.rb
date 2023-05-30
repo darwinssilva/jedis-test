@@ -59,5 +59,5 @@ Rails.application.configure do
   # config.action_view.annotate_rendered_view_with_filenames = true
 
   config.twilio_account_sid = 'AC89b520e2a2f004721f7ff5ddf7593a66'
-  config.twilio_auth_token = '476b47bc37ccf71dc8cdfddc434b8bbf'
+  config.twilio_auth_token = '6c42f51025287c7429785f5c1febe6fb'
 end
